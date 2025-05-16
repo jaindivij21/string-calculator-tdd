@@ -10,4 +10,10 @@ RSpec.describe StringCalculator do
       expect(StringCalculator.new(input).add).to eq(expected)
     end
   end
+
+  [['0  ', 0], ['   1', 1], [' 1000   ', 1000]].each do |input, expected|
+    it "returns #{expected} for input '#{input}' with spaces" do
+      expect(StringCalculator.new(input).add).to eq(expected)
+    end
+  end
 end
