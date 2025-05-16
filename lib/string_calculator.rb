@@ -7,7 +7,7 @@ class StringCalculator
   # Method to add the numbers
   # @return [Integer] The sum of the numbers
   def add
-    0
+    @numbers.sum
   end
 
   private
@@ -16,6 +16,8 @@ class StringCalculator
   # @param str [String] The string containing numbers to be added
   # @return [Array<Integer>] An array of integers extracted from the string
   def parse_string(str)
-    []
+    return [] if str.empty?
+
+    [str.to_i]
   end
 end
