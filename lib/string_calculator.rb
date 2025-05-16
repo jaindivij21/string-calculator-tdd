@@ -18,6 +18,6 @@ class StringCalculator
   def parse_string(str)
     return [] if str.empty?
 
-    [str.to_i]
+    str.split(',').map(&:to_i)
   end
 end

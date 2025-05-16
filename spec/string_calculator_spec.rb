@@ -16,4 +16,16 @@ RSpec.describe StringCalculator do
       expect(StringCalculator.new(input).add).to eq(expected)
     end
   end
+
+  [['1,2', 3], ['1,2,3', 6], ['1,2,3,4', 10]].each do |input, expected|
+    it "returns #{expected} for input '#{input}' with commas as default delimiter" do
+      expect(StringCalculator.new(input).add).to eq(expected)
+    end
+  end
+
+  [['1,2  ', 3], ['  1,2,3', 6], ['    1,2,3,4  ', 10]].each do |input, expected|
+    it "returns #{expected} for input '#{input}' with commas as default delimiter and spaces" do
+      expect(StringCalculator.new(input).add).to eq(expected)
+    end
+  end
 end
