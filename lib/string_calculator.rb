@@ -25,7 +25,7 @@ class StringCalculator
 
     raise "negatives not allowed: #{negatives.join(', ')}" unless negatives.empty?
 
-    nums
+    nums.reject { |n| n > 1000 }
   end
 
   # Method to parse the delimiter from the string

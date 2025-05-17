@@ -42,10 +42,15 @@ RSpec.describe StringCalculator do
       end
     end
 
-    # raises exception for negative numbers
     [['1,-2', 'negatives not allowed: -2'], ["//;\n1;-2", 'negatives not allowed: -2']].each do |input, expected|
       it "raises an exception for input '#{input}' with negative numbers" do
         expect { StringCalculator.new(input).add }.to raise_error(RuntimeError, expected)
+      end
+    end
+
+    [['1003, 2', 2]].each do |input, expected|
+      it "return #{expected} for input '#{input}' ignoring numbers greater than 1000" do
+        expect(StringCalculator.new(input).add).to eq(expected)
       end
     end
   end
