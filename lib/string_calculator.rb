@@ -20,8 +20,12 @@ class StringCalculator
   # @return [Array<Integer>] An array of integers extracted from the string
   def parse_string
     return [] if @number_str.empty?
+    nums = @number_str.split(@delimiters).map(&:to_i)
+    negatives = nums.select { |n| n < 0 }
 
-    @number_str.split(@delimiters).map(&:to_i)
+    raise "negatives not allowed: #{negatives.join(', ')}" unless negatives.empty?
+
+    nums
   end
 
   # Method to parse the delimiter from the string
