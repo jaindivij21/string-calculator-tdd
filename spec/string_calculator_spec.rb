@@ -28,4 +28,16 @@ RSpec.describe StringCalculator do
       expect(StringCalculator.new(input).add).to eq(expected)
     end
   end
+
+  [['1\n2,3', 6], ['1\n2,3\n4', 10], ["1,\n", 1], ["1,\n,,, 2", 3]].each do |input, expected|
+    it "returns #{expected} for input '#{input}' with newlines as delimiters" do
+      expect(StringCalculator.new(input).add).to eq(expected)
+    end
+  end
+
+  [["//;\n1;2", 3]].each do |input, expected|
+    it "return #{expected} for input '#{input}' with custom delimiter" do
+      expect(StringCalculator.new(input).add).to eq(expected)
+    end
+  end
 end

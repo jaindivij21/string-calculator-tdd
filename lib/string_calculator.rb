@@ -1,7 +1,11 @@
 class StringCalculator
+  DEFAULT_DELIMITERS = /[,\n]/
+  CUSTOM_DELIMITER_PREFIX = '//'
+
   # Constructor
   def initialize(str)
-    @numbers = parse_string(str)
+    @delimiters, @number_str = parse_delimiter(str)
+    @numbers = parse_string
   end
 
   # Method to add the numbers
@@ -13,11 +17,28 @@ class StringCalculator
   private
 
   # Method to parse the string and extract numbers to be added
-  # @param str [String] The string containing numbers to be added
   # @return [Array<Integer>] An array of integers extracted from the string
-  def parse_string(str)
-    return [] if str.empty?
+  def parse_string
+    return [] if @number_str.empty?
 
-    str.split(',').map(&:to_i)
+    @number_str.split(@delimiters).map(&:to_i)
+  end
+
+  # Method to parse the delimiter from the string
+  # @param str [String] The string containing the delimiter
+  # @return [Array<String, String>] An array containing the delimiter and the string without the delimiter
+  def parse_delimiter(str)
+    str.gsub!('\\n', "\n")
+
+    if str.start_with?(CUSTOM_DELIMITER_PREFIX)
+      delimiter_line, rest = str.split("\n", 2)
+      rest ||= ""
+
+      delimiter = delimiter_line[CUSTOM_DELIMITER_PREFIX.length..] || ""
+
+      [Regexp.escape(delimiter), rest]
+    else
+      [DEFAULT_DELIMITERS, str]
+    end
   end
 end
