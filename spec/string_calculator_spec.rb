@@ -53,5 +53,11 @@ RSpec.describe StringCalculator do
         expect(StringCalculator.new(input).add).to eq(expected)
       end
     end
+
+    [["//[***]\n1***2***3", 6]].each do |input, expected|
+      it "return #{expected} for input '#{input}' supporting multi-character delimiters" do
+        expect(StringCalculator.new(input).add).to eq(expected)
+      end
+    end
   end
 end
