@@ -35,7 +35,7 @@ RSpec.describe StringCalculator do
     end
   end
 
-  [["//;\n1;2", 3]].each do |input, expected|
+  [["//;\n1;2", 3], ["//;\n", 0]].each do |input, expected|
     it "return #{expected} for input '#{input}' with custom delimiter" do
       expect(StringCalculator.new(input).add).to eq(expected)
     end
