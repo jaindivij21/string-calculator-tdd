@@ -30,7 +30,7 @@ class StringCalculator
 
   # Method to parse the delimiter from the string
   # @param str [String] The string containing the delimiter
-  # @return [Array<String, String>] An array containing the delimiter and the string without the delimiter
+  # @return [Array<(Regexp, String)>] An array containing the delimiter regexp and the remaining string
   def parse_delimiter(str)
     str = str.gsub('\\n', "\n")
 
@@ -38,11 +38,17 @@ class StringCalculator
       delimiter_line, rest = str.split("\n", 2)
       rest ||= ""
 
-      delimiter = delimiter_line[CUSTOM_DELIMITER_PREFIX.size..]
-      delimiter = delimiter[1..-2] if delimiter&.start_with?('[') && delimiter&.end_with?(']')
-      delimiter ||= ""
+      delimiter_part = delimiter_line[CUSTOM_DELIMITER_PREFIX.size..]
+      delimiter_part ||= ""
 
-      [delimiter, rest]
+      if delimiter_part&.start_with?('[') && delimiter_part&.end_with?(']')
+        delimiters = delimiter_part.scan(/\[(.*?)\]/).flatten
+        delimiter_regexp = Regexp.new(delimiters.map { |d| Regexp.escape(d) }.join('|'))
+
+        [delimiter_regexp, rest]
+      else
+        [Regexp.new(Regexp.escape(delimiter_part)), rest]
+      end
     else
       [DEFAULT_DELIMITERS, str]
     end
